@@ -15,12 +15,6 @@ for (const requiredVar of ['DOMAIN', 'SUBDOMAINS', 'YH_IDENTITY', 'YH_PASSWORD',
 const domain = process.env.DOMAIN;
 const subdomains = process.env.SUBDOMAINS?.split(',');
 
-const credentials = {
-  identity: process.env.YH_IDENTITY,
-  password: process.env.YH_PASSWORD,
-  twoFactor: null
-};
-
 dns.promises.setServers([process.env.DNS]);
 
 async function main() {
@@ -52,7 +46,7 @@ async function main() {
 
   const yourHosting = new YourHostingClient();
 
-  await yourHosting.login(credentials);
+  await yourHosting.login(process.env.YH_IDENTITY, process.env.YH_PASSWORD);
 
   const dnsSettings = await yourHosting.getDnsSettings(domain);
   
